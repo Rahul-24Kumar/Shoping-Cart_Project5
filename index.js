@@ -10,7 +10,7 @@ app.use('/', route);
 
 try {
     //Insert your MongoDB Atlas String here:
-    mongoose.connect("mongodb://0.0.0.0:27017/Products-Management", {useNewUrlParser:true});
+    mongoose.connect("mongodb+srv://rahat6713:1819rahat@cluster0.iee0y.mongodb.net/Project_5Group_8?authSource=admin&replicaSet=atlas-ivk86y-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true", {useNewUrlParser:true});
     console.log(`MongoDB Connection Successful`);
 } catch (error) {
     console.log(error);
