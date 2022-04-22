@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx nodemon index.js"
   },
-  "author": "ishvinder singh",
+  "author": "Rahul Kumar Chaurasia",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1111.0",
