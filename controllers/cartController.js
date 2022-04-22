@@ -7,11 +7,6 @@ const productModel = require('../models/productModel');
 const createCart = async (req,res) => {
 
     try {
-
-        const bearerHeader = req.headers['authorization'];
-        if(!bearerHeader){
-            return res.status(400).json({status:false, msg:`Bearer Token Missing!`});
-        }
         
         
         let userIdFromParams = req.params.userId;
@@ -64,11 +59,6 @@ const updateCart = async(req,res)=>{
         if(!validator.isValidObjectId(_id))
         return res.status(400).json({status:false, msg:`Invalid User ID!`});
 
-        
-        const bearerHeader = req.headers['authorization'];
-        if(!bearerHeader){
-            return res.status(400).json({status:false, msg:`Bearer Token Missing!`});
-        }   
 
         const ifCartExists = await cartModel.findById(requestBody.cartId);
         if(!ifCartExists){
@@ -78,12 +68,8 @@ const updateCart = async(req,res)=>{
             return res.status(400).json({status:false, msg:`Invalid Cart ID!`});
         }
         const cartID = ifCartExists._id.toString();
-
-    
-
         //console.log(cartID);
-    
-    
+        
         const ifProductExists = await productModel.findById(requestBody.productId);
 
         const productID = ifProductExists._id.toString();
@@ -98,7 +84,7 @@ const updateCart = async(req,res)=>{
         const exsitingQuantity = ifCartExists.items[0].quantity; 
         //console.log(exsitingQuantity);
     
-        const productQuantity = exsitingQuantity - req.body.items[0].quantity;
+        const productQuantity = req.body.items[0].quantity;
         const checkNewQuantity = productQuantity;
         //console.log(checkNewQuantity);
 
@@ -122,10 +108,7 @@ const updateCart = async(req,res)=>{
 
 const getCartById = async (req,res)=>{
     try {
-        const bearerHeader = req.headers['authorization'];
-        if(!bearerHeader){
-            return res.status(400).json({status:false, msg:`Bearer Token Missing!`});
-        }
+        
         let { userId: _id } = req.params;
         if (!validator.isValidObjectId(_id)) {
             return res.status(400).json({ status: false, msg: `Invalid ID!` });
@@ -147,10 +130,7 @@ const getCartById = async (req,res)=>{
 
 const deleteCartById = async (req,res)=>{
     try {
-        const bearerHeader = req.headers['authorization'];
-        if(!bearerHeader){
-            return res.status(400).json({status:false, msg:`Bearer Token Missing!`});
-        }
+        
         let { userId: _id } = req.params;
         if (!validator.isValidObjectId(_id)) {
             return res.status(400).json({ status: false, msg: `Invalid ID!` });

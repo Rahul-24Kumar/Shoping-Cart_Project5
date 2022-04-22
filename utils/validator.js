@@ -19,6 +19,7 @@ const isValidCurrencyId = function (currencyId) {
 
 
 
+
 const isValidPassword = function (password){
     if(password.length <= 15 && password.length >= 8){
         return true;

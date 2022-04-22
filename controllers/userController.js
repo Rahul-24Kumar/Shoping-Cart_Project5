@@ -4,6 +4,7 @@ const aws = require('../aws/s3Upload');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { ManagedBlockchain } = require('aws-sdk');
+const jwtSecretKey = 'thorium@group8';
 
 
 const createUser = async (req,res)=> {
@@ -163,19 +164,16 @@ const userLogIn = async (req, res) => {
           .json({ status: false, msg: `Invalid email or password!` });
       }
   
-      const token = jwt.sign(
+      const token = await jwt.sign(
         {
           userId: findUser._id,
         },
-        "thorium@group8", {expiresIn: '1500mins'}
+        jwtSecretKey, {expiresIn: '1500mins'}
       );
+
+      res.status(200).json({status:true, msg:`Login Successful`, data:{token, userId:findUser._id}});
   
-      res.setHeader("x-api-key", token);
-      let UserID = findUser._id
-      let finalData = {token, UserID}
-      res
-        .status(201)
-        .json({ status: true, msg: `user login successful`, data: finalData });
+      
     } catch (error) {
       res.status(500).json({ status: false, error: error.message });
     }
@@ -204,7 +202,7 @@ const userLogIn = async (req, res) => {
     try {
         let { userId: _id } = req.params;
         let requestBody = req.body;
-        let files = req.files
+        
         
         let {fname, lname, email, phone, address} = requestBody;
   

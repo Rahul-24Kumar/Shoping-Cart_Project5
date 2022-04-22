@@ -92,7 +92,6 @@ const updateOrder = async (req,res)=>{
     const findOrderId = await orderModel.findOne({userId: _id});
     const orderID = findOrderId._id.toString();
     //console.log(orderID); 
-    
 
     if(!/\b(?:completed|pending|cancelled)\b/.test(status)){
         return res.status(400).json({ status: false, msg: `Status can only be completed, pending or cancelled` });
@@ -100,6 +99,9 @@ const updateOrder = async (req,res)=>{
     
     if(findOrderId.status === 'cancelled') {
         return res.status(400).json({ status: false, msg: `Order already cancelled!` });
+    }
+    if(findOrderId.status === 'completed') {
+        return res.status(400).json({ status: false, msg: `Order is already completed!` });
     }
 
     const updateOrder = await orderModel.findByIdAndUpdate(orderID, req.body, {new:true});
